@@ -2,17 +2,10 @@
   <div class="row">
     <form @submit.prevent>
       <span>{{ title }}</span>
-      <input
-        v-bind:value="title"
-        @input="title = $event.target.value"
-        class="input"
-        type="text"
-        placeholder="name"
-      />
+      <input v-model="title" class="input" type="text" placeholder="name" />
       <span>{{ text }}</span>
       <input
-        v-bind:value="text"
-        @input="text = $event.target.value"
+        v-model="text"
         class="input"
         type="text"
         placeholder="description"
@@ -42,7 +35,7 @@ export default {
   methods: {
     createPost() {
       this.posts.push({
-        id: this.posts.length,
+        id: this.posts.length + 1,
         title: this.title,
         text: this.text,
       })
