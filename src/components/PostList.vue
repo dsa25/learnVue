@@ -1,6 +1,11 @@
 <template>
   <h3>List post:</h3>
-  <PostItem v-for="post in posts" :key="post.id" :post="post" />
+  <PostItem
+    v-for="post in posts"
+    :key="post.id"
+    :post="post"
+    @remove="$emit('remove', post)"
+  />
 </template>
 
 <script>

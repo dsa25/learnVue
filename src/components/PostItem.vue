@@ -1,7 +1,12 @@
 <template>
   <div class="post">
-    <div><strong>name: </strong> {{ post.title }}</div>
-    <div><strong>descript: </strong> {{ post.text }}</div>
+    <div>
+      <div><strong>name: </strong> {{ post.title }}</div>
+      <div><strong>descript: </strong> {{ post.text }}</div>
+    </div>
+    <div class="post__btns">
+      <MyBtn @click="$emit('remove', post)">X</MyBtn>
+    </div>
   </div>
 </template>
 
@@ -15,6 +20,9 @@ export default {
 
 <style>
 .post {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 15px;
   border-radius: 5px;
   border: 1px solid green;

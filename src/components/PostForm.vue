@@ -9,7 +9,7 @@
       type="text"
       placeholder="description"
     />
-    <button @click="createPost">Create</button>
+    <MyBtn style="margin-left: auto" @click="createPost">Create</MyBtn>
   </form>
 </template>
 
@@ -47,13 +47,5 @@ form {
   border-radius: 5px;
   margin-bottom: 15px;
   border: 1px solid green;
-}
-button {
-  margin: 0 0 0 auto;
-  display: block;
-  padding: 5px 8px;
-  border-radius: 3px;
-  border: 1px solid gray;
-  color: green;
 }
 </style>
