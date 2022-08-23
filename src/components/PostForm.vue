@@ -3,8 +3,8 @@
     <p>Создание поста</p>
     <span>{{ post.title }}</span>
     <my-input v-model="post.title" placeholder="name" />
-    <span>{{ post.text }}</span>
-    <my-input v-model="post.text" placeholder="description" />
+    <span>{{ post.body }}</span>
+    <my-input v-model="post.body" placeholder="description" />
     <MyBtn style="margin-left: auto" @click="createPost">Create</MyBtn>
   </form>
 </template>
@@ -15,7 +15,7 @@ export default {
     return {
       post: {
         title: "",
-        text: "",
+        body: "",
       },
     }
   },
@@ -25,7 +25,7 @@ export default {
       this.$emit("create", this.post)
       this.post = {
         title: "",
-        text: "",
+        body: "",
       }
     },
   },

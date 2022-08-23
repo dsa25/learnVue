@@ -1,6 +1,7 @@
 <template>
   <div class="row">
     <h1>Page posts</h1>
+    <my-btn @click="fetchPost">Получить посты</my-btn>
     <my-btn @click="showDialog">Создать пост</my-btn>
     <my-dialog v-model:show="visibleDialog">
       <PostForm @create="createPost" />
@@ -21,12 +22,12 @@ export default {
   data() {
     return {
       posts: [
-        { id: 1, title: "js ", text: "text post 1" },
-        { id: 2, title: "js 2", text: "text post 2" },
-        { id: 3, title: "js 3", text: "text post 3" },
+        // { id: 1, title: "js ", text: "text post 1" },
+        // { id: 2, title: "js 2", text: "text post 2" },
+        // { id: 3, title: "js 3", text: "text post 3" },
       ],
       title: "",
-      text: "",
+      body: "",
       visibleDialog: false,
     }
   },
@@ -40,6 +41,17 @@ export default {
     },
     showDialog() {
       this.visibleDialog = true
+    },
+    async fetchPost() {
+      try {
+        const res = await fetch(
+          "https://jsonplaceholder.typicode.com/posts?_limit=10"
+        )
+        this.posts = await res.json()
+      } catch (error) {
+        // alert(error)
+        console.log(error)
+      }
     },
   },
 }
