@@ -1,6 +1,10 @@
 <template>
   <div class="row">
-    <PostForm @create="createPost" />
+    <h1>Page posts</h1>
+    <my-btn @click="showDialog">Создать пост</my-btn>
+    <my-dialog v-model:show="visibleDialog">
+      <PostForm @create="createPost" />
+    </my-dialog>
     <PostList :posts="posts" @remove="removePost" />
   </div>
 </template>
@@ -8,6 +12,7 @@
 <script>
 import PostForm from "./components/PostForm.vue"
 import PostList from "./components/PostList.vue"
+
 export default {
   components: {
     PostForm,
@@ -22,14 +27,19 @@ export default {
       ],
       title: "",
       text: "",
+      visibleDialog: false,
     }
   },
   methods: {
     createPost(post, two, three) {
       this.posts.push(post)
+      this.visibleDialog = false
     },
     removePost(post) {
       this.posts = this.posts.filter((p) => p.id !== post.id)
+    },
+    showDialog() {
+      this.visibleDialog = true
     },
   },
 }

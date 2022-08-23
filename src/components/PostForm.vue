@@ -1,5 +1,6 @@
 <template>
   <form @submit.prevent>
+    <p>Создание поста</p>
     <span>{{ post.title }}</span>
     <my-input v-model="post.title" placeholder="name" />
     <span>{{ post.text }}</span>
