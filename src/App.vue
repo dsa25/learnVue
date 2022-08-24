@@ -21,12 +21,11 @@ export default {
   },
   data() {
     return {
-      // posts: [
-      //   { id: 1, title: "js ", text: "text post 1" },
-      //   { id: 2, title: "js 2", text: "text post 2" },
-      //   { id: 3, title: "js 3", text: "text post 3" },
-      // ],
-      posts: this.fetchPost(),
+      posts: [
+        // { id: 1, title: "js ", text: "text post 1" },
+        // { id: 2, title: "js 2", text: "text post 2" },
+        // { id: 3, title: "js 3", text: "text post 3" },
+      ],
       title: "",
       body: "",
       visibleDialog: false,
@@ -54,6 +53,9 @@ export default {
         console.log(error)
       }
     },
+  },
+  mounted() {
+    this.fetchPost()
   },
 }
 </script>
