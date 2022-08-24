@@ -49,18 +49,15 @@ export default {
     async fetchPost() {
       try {
         this.isPostLoading = true
-        setTimeout(async () => {
-          const res = await fetch(
-            "https://jsonplaceholder.typicode.com/posts?_limit=10"
-          )
-          this.posts = await res.json()
-          this.isPostLoading = false
-        }, 1000)
+        const res = await fetch(
+          "https://jsonplaceholder.typicode.com/posts?_limit=10"
+        )
+        this.posts = await res.json()
       } catch (error) {
         // alert(error)
         console.log(error)
       } finally {
-        // this.isPostLoading = false
+        this.isPostLoading = false
       }
     },
   },
