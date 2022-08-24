@@ -6,7 +6,10 @@
     <my-dialog v-model:show="visibleDialog">
       <PostForm @create="createPost" />
     </my-dialog>
-    <PostList :posts="posts" @remove="removePost" />
+    <PostList :posts="posts" @remove="removePost" v-if="!isPostLoading" />
+    <div v-else style="text-align: center; padding: 15px">
+      Идет загрузка ...
+    </div>
   </div>
 </template>
 
@@ -29,6 +32,7 @@ export default {
       title: "",
       body: "",
       visibleDialog: false,
+      isPostLoading: false,
     }
   },
   methods: {
@@ -44,13 +48,19 @@ export default {
     },
     async fetchPost() {
       try {
-        const res = await fetch(
-          "https://jsonplaceholder.typicode.com/posts?_limit=10"
-        )
-        this.posts = await res.json()
+        this.isPostLoading = true
+        setTimeout(async () => {
+          const res = await fetch(
+            "https://jsonplaceholder.typicode.com/posts?_limit=10"
+          )
+          this.posts = await res.json()
+          this.isPostLoading = false
+        }, 1000)
       } catch (error) {
         // alert(error)
         console.log(error)
+      } finally {
+        // this.isPostLoading = false
       }
     },
   },
