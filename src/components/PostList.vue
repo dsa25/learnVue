@@ -20,12 +20,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.post {
-  padding: 15px;
-  border-radius: 5px;
-  border: 1px solid green;
-  margin: 15px 0;
-}
-</style>

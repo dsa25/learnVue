@@ -1,8 +1,11 @@
 <template>
   <div class="row">
     <h1>Page posts</h1>
-    <my-btn @click="fetchPost">Получить посты</my-btn>
-    <my-btn @click="showDialog">Создать пост</my-btn>
+    <div class="app__btns">
+      <my-btn @click="fetchPost">Получить посты</my-btn>
+      <my-btn @click="showDialog">Создать пост</my-btn>
+      <my-select v-model="selectedSort" :options="sortOptions" />
+    </div>
     <my-dialog v-model:show="visibleDialog">
       <PostForm @create="createPost" />
     </my-dialog>
@@ -33,6 +36,11 @@ export default {
       body: "",
       visibleDialog: false,
       isPostLoading: false,
+      selectedSort: "",
+      sortOptions: [
+        { value: "title", name: "по названию" },
+        { value: "body", name: "по содержимому" },
+      ],
     }
   },
   methods: {
@@ -64,6 +72,17 @@ export default {
   mounted() {
     this.fetchPost()
   },
+  watch: {
+    selectedSort(newValue) {
+      this.posts.sort((post1, post2) => {
+        // return post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
+        return post1[newValue]?.localeCompare(post2[newValue])
+      })
+    },
+    visibleDialog(newValue) {
+      console.log(newValue)
+    },
+  },
 }
 </script>
 
@@ -78,5 +97,9 @@ text {
   margin: 0 auto;
   max-width: 800px;
   padding: 0 15px;
+}
+.app__btns {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
