@@ -10,6 +10,14 @@
     <my-dialog v-model:show="visibleDialog">
       <PostForm @create="createPost" />
     </my-dialog>
+    <div class="list__head">
+      <h3>List post:</h3>
+      <my-pagination
+        @changePage="changePagination"
+        :countPages="totalPages"
+        :page="page"
+      />
+    </div>
     <PostList
       :posts="sortedPostsAndSearchPosts"
       @remove="removePost"
@@ -17,15 +25,6 @@
     />
     <div v-else style="text-align: center; padding: 15px">
       Идет загрузка ...
-    </div>
-    <div class="pagination">
-      <span
-        v-for="pageNumber in totalPages"
-        :key="pageNumber"
-        :class="{ pagination__current: pageNumber == page }"
-        @click="changePagination(pageNumber)"
-        >{{ pageNumber }}</span
-      >
     </div>
   </div>
 </template>
@@ -74,7 +73,7 @@ export default {
     },
     changePagination(pageNumber) {
       this.page = pageNumber
-      this.fetchPost()
+      // this.fetchPost()
     },
     async fetchPost() {
       try {
@@ -110,11 +109,11 @@ export default {
     },
   },
   watch: {
-    // page() {
-    //   // DevTools failed to load source map:
-    //   // Could not load content for chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/browser-polyfill.js.map: System error: net::ERR_FILE_NOT_FOUND
-    // this.fetchPost()
-    // },
+    page() {
+      // DevTools failed to load source map:
+      // Could not load content for chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/browser-polyfill.js.map: System error: net::ERR_FILE_NOT_FOUND
+      this.fetchPost()
+    },
     // selectedSort(newValue) {
     //   this.posts.sort((post1, post2) => {
     //     // return post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
@@ -144,32 +143,9 @@ text {
   display: flex;
   justify-content: space-between;
 }
-.pagination {
-  padding: 15px 0;
+.list__head {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-}
-.pagination span {
-  display: block;
-  margin: 3px;
-  width: 22px;
-  height: 22px;
-  line-height: 22px;
-  font-size: 14px;
-  text-align: center;
-  border: 1px solid green;
-  border-radius: 3px;
-  cursor: pointer;
-  user-select: none;
-}
-.pagination span:hover:not(.pagination__current) {
-  opacity: 0.8;
-  color: green;
-}
-span.pagination__current {
-  background: #60c163;
-  border-color: #60c163;
-  color: #fff;
 }
 </style>
