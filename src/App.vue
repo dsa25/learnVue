@@ -18,6 +18,15 @@
     <div v-else style="text-align: center; padding: 15px">
       Идет загрузка ...
     </div>
+    <div class="pagination">
+      <span
+        v-for="pageNumber in totalPages"
+        :key="pageNumber"
+        :class="{ pagination__current: pageNumber == page }"
+        @click="changePagination(pageNumber)"
+        >{{ pageNumber }}</span
+      >
+    </div>
   </div>
 </template>
 
@@ -43,6 +52,9 @@ export default {
       visibleDialog: false,
       isPostLoading: false,
       selectedSort: "",
+      page: 1,
+      limit: 10,
+      totalPages: 0,
       sortOptions: [
         { value: "title", name: "по названию" },
         { value: "body", name: "по содержимому" },
@@ -60,11 +72,18 @@ export default {
     showDialog() {
       this.visibleDialog = true
     },
+    changePagination(pageNumber) {
+      this.page = pageNumber
+      this.fetchPost()
+    },
     async fetchPost() {
       try {
         this.isPostLoading = true
         const res = await fetch(
-          "https://jsonplaceholder.typicode.com/posts?_limit=10"
+          `https://jsonplaceholder.typicode.com/posts?_limit=${this.limit}&_page=${this.page}`
+        )
+        this.totalPages = Math.ceil(
+          res.headers.get("x-total-count") / this.limit
         )
         this.posts = await res.json()
       } catch (error) {
@@ -90,17 +109,22 @@ export default {
       )
     },
   },
-  // watch: {
-  //   selectedSort(newValue) {
-  //     this.posts.sort((post1, post2) => {
-  //       // return post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
-  //       return post1[newValue]?.localeCompare(post2[newValue])
-  //     })
-  //   },
-  //   visibleDialog(newValue) {
-  //     console.log(newValue)
-  //   },
-  // },
+  watch: {
+    // page() {
+    //   // DevTools failed to load source map:
+    //   // Could not load content for chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/browser-polyfill.js.map: System error: net::ERR_FILE_NOT_FOUND
+    // this.fetchPost()
+    // },
+    // selectedSort(newValue) {
+    //   this.posts.sort((post1, post2) => {
+    //     // return post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
+    //     return post1[newValue]?.localeCompare(post2[newValue])
+    //   })
+    // },
+    // visibleDialog(newValue) {
+    //   console.log(newValue)
+    // },
+  },
 }
 </script>
 
@@ -119,5 +143,33 @@ text {
 .app__btns {
   display: flex;
   justify-content: space-between;
+}
+.pagination {
+  padding: 15px 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.pagination span {
+  display: block;
+  margin: 3px;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid green;
+  border-radius: 3px;
+  cursor: pointer;
+  user-select: none;
+}
+.pagination span:hover:not(.pagination__current) {
+  opacity: 0.8;
+  color: green;
+}
+span.pagination__current {
+  background: #60c163;
+  border-color: #60c163;
+  color: #fff;
 }
 </style>
