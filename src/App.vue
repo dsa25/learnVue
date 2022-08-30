@@ -26,6 +26,7 @@
     <div v-else style="text-align: center; padding: 15px">
       Идет загрузка ...
     </div>
+    <div ref="observer" class="observer"></div>
   </div>
 </template>
 
@@ -92,9 +93,44 @@ export default {
         this.isPostLoading = false
       }
     },
+    async loadMorePosts() {
+      try {
+        this.page += 1
+        // this.isPostLoading = true
+        const res = await fetch(
+          `https://jsonplaceholder.typicode.com/posts?_limit=${this.limit}&_page=${this.page}`
+        )
+        this.totalPages = Math.ceil(
+          res.headers.get("x-total-count") / this.limit
+        )
+        console.log("1", this.posts)
+        let newPosts = await res.json()
+        this.posts = [...this.posts, ...newPosts]
+        console.log("2", this.posts)
+      } catch (error) {
+        // alert(error)
+        console.log(error)
+      } finally {
+        // this.isPostLoading = false
+      }
+    },
   },
   mounted() {
     this.fetchPost()
+    console.log(this.$refs.observer)
+    const options = {
+      // root: document.querySelector(".wrList"),
+      rootMargin: "0px",
+      threshold: 1.0,
+    }
+    const callback = (entries, observer) => {
+      /* Content excerpted, show below */
+      if (entries[0].isIntersecting && this.page < this.totalPages) {
+        this.loadMorePosts()
+      }
+    }
+    const observer = new IntersectionObserver(callback, options)
+    observer.observe(this.$refs.observer)
   },
   computed: {
     sortedPosts() {
@@ -112,7 +148,7 @@ export default {
     page() {
       // DevTools failed to load source map:
       // Could not load content for chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/browser-polyfill.js.map: System error: net::ERR_FILE_NOT_FOUND
-      this.fetchPost()
+      // this.fetchPost()
     },
     // selectedSort(newValue) {
     //   this.posts.sort((post1, post2) => {
@@ -147,5 +183,9 @@ text {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.observer {
+  height: 30px;
+  background: limegreen;
 }
 </style>
