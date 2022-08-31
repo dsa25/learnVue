@@ -112,7 +112,6 @@ export default {
   },
   mounted() {
     this.fetchPost()
-    console.log(this.$refs.observer)
     const options = {
       // root: document.querySelector(".wrList"),
       rootMargin: "0px",
