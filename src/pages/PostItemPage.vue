@@ -6,13 +6,19 @@
     {{ post.body }}
     {{ post.body }}
   </p>
+  <comments-post :comments="comments" />
 </template>
 
 <script>
+import CommentsPost from "@/components/CommentsPost.vue"
 export default {
+  components: {
+    CommentsPost,
+  },
   data() {
     return {
       post: {},
+      comments: [],
     }
   },
   methods: {
@@ -26,9 +32,20 @@ export default {
         console.log(error)
       }
     },
+    async getCommentsPost() {
+      try {
+        const res = await fetch(
+          `https://jsonplaceholder.typicode.com/posts/${this.$route.params.id}/comments`
+        )
+        this.comments = await res.json()
+      } catch (error) {
+        console.log(error)
+      }
+    },
   },
   mounted() {
     this.getItemPost()
+    this.getCommentsPost()
   },
 }
 </script>
