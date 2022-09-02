@@ -26,7 +26,11 @@
     <div v-else style="text-align: center; padding: 15px">
       Идет загрузка ...
     </div>
-    <div ref="observer" class="observer"></div>
+    <!-- <div ref="observer" class="observer"></div> -->
+    <div
+      v-intersection="{ loadMorePosts, page, totalPages }"
+      class="observer"
+    ></div>
   </div>
 </template>
 
@@ -112,19 +116,6 @@ export default {
   },
   mounted() {
     this.fetchPost()
-    const options = {
-      // root: document.querySelector(".wrList"),
-      rootMargin: "0px",
-      threshold: 1.0,
-    }
-    const callback = (entries, observer) => {
-      /* Content excerpted, show below */
-      if (entries[0].isIntersecting && this.page < this.totalPages) {
-        this.loadMorePosts()
-      }
-    }
-    const observer = new IntersectionObserver(callback, options)
-    observer.observe(this.$refs.observer)
   },
   computed: {
     sortedPosts() {
