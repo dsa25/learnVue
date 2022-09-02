@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <h1>Page posts</h1>
-    <my-input v-model="searchQuery" placeholder="поиск..." />
+    <my-input v-focus v-model="searchQuery" placeholder="поиск..." />
     <div class="app__btns">
       <my-btn @click="fetchPost">Получить посты</my-btn>
       <my-btn @click="showDialog">Создать пост</my-btn>

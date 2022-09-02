@@ -2,7 +2,7 @@
   <form @submit.prevent>
     <p>Создание поста</p>
     <span>{{ post.title }}</span>
-    <my-input v-model="post.title" placeholder="name" />
+    <my-input v-focus v-model="post.title" placeholder="name" />
     <span>{{ post.body }}</span>
     <my-input v-model="post.body" placeholder="description" />
     <MyBtn style="margin-left: auto" @click="createPost">Create</MyBtn>
