@@ -9,6 +9,9 @@
     <router-link to="/about" :class="{ active: $route.path === '/about' }"
       >about</router-link
     >
+    <router-link to="/store" :class="{ active: $route.path === '/store' }"
+      >store</router-link
+    >
   </div>
 </template>
 

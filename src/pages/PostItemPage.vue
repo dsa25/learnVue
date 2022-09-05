@@ -1,5 +1,5 @@
 <template>
-  <h5>id: {{ post.id }}</h5>
+  <h5>id: {{ post.id }} likes: {{ $store.state.likes }}</h5>
   <h3>{{ post.title }}</h3>
   <p class="">
     {{ post.body }}
