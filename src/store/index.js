@@ -1,12 +1,15 @@
 import { createStore } from "vuex"
+import { postModule } from "@/store/postModule"
 
 export default createStore({
   // ядро vuex:
 
-  state: {
+  state: () => {
     // state - само состояние, тут данные
-    likes: 2,
-    isAuth: false,
+    return {
+      likes: 2,
+      isAuth: false,
+    }
   },
   getters: {
     //   getters - computed свойства ( кешируемые вычисляемы значения )
@@ -32,5 +35,6 @@ export default createStore({
   },
   modules: {
     // модуль - изолированный кусочек состояния
+    post: postModule,
   },
 })
