@@ -1,5 +1,6 @@
 <template>
   <h1>welcome</h1>
+  <p class="">new commit rename project</p>
 </template>
 
 <script>
